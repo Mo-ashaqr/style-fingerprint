@@ -3,3 +3,4 @@ data/
 weakness_log.md
 __pycache__/
 .DS_Store
+.idea/
