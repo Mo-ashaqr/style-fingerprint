@@ -2,6 +2,8 @@ from pathlib import Path
 from text_cleaning import clean
 from text_analysis import tokenize
 from collections import Counter
+import matplotlib.pyplot as plt
+
 cities_headings = """
 The Period
 The Mail
@@ -230,5 +232,43 @@ def main():
         print(f"\nAuthor: {author}")
         for word, frequency in profile.items():
             print(f"{word}: {frequency:.2f}")
+    austen_values = [
+        author_profiles["Jane Austen"][word]
+        for word in comparison_words
+    ]
+    dickens_values = [
+        author_profiles["Charles Dickens"][word]
+        for word in comparison_words
+    ]
+    x = range(len(comparison_words))
+    width = 0.35
+
+    plt.figure(figsize=(14, 7))
+
+    plt.bar(
+        [i - width / 2 for i in x],
+        austen_values,
+        width,
+        label="Jane Austen"
+    )
+
+    plt.bar(
+        [i + width / 2 for i in x],
+        dickens_values,
+        width,
+        label="Charles Dickens"
+    )
+
+    plt.xlabel("Words")
+    plt.ylabel("Frequency per 10,000 words")
+    plt.title("Author-Level Word Frequency Comparison")
+
+    plt.xticks(list(x), comparison_words)
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+
 if __name__ == "__main__":
     main()
