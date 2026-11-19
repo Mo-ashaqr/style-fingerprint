@@ -1,5 +1,5 @@
 from pathlib import Path
-from text_cleaning import clean, normalize_heading, heading_pattern
+from text_cleaning import clean
 from text_analysis import tokenize
 from collections import Counter
 cities_headings = """
@@ -129,7 +129,6 @@ twist_headings = [
 
 def main():
 
-    global type_number
     data_dir = Path("data")
 
     files_to_open = [
@@ -196,13 +195,40 @@ def main():
         word_counter = Counter(tokens)
         tokens_number = len(tokens)
         type_number = len(word_counter)
+        book_frequencies = {}
         print(f"\nBook: {filename}")
         # print(f"TTR = {type_number / tokens_number:.2%}")
         # print(word_counter.most_common(20))
         for word in comparison_words:
             count = word_counter[word]
             relative_frequency = (count / tokens_number) * 10000
+            book_frequencies[word] = relative_frequency
             print(f"{word}: {relative_frequency:.2f}")
+        relative_frequencies[filename] = book_frequencies
+    author_books = {
+        "Jane Austen": [
+            "austen_emma.txt",
+            "austen_pride.txt"
+        ],
 
+        "Charles Dickens": [
+            "dickens_cities.txt",
+            "dickens_twist.txt"
+        ]
+    }
+    author_profiles = {}
+    for author, books in author_books.items():
+        author_profiles[author] = {}
+        for word in comparison_words:
+            word_frequencies = []
+            for book in books:
+                frequency = relative_frequencies[book][word]
+                word_frequencies.append(frequency)
+            average_frequency = sum(word_frequencies) / len(word_frequencies)
+            author_profiles[author][word] = average_frequency
+    for author, profile in author_profiles.items():
+        print(f"\nAuthor: {author}")
+        for word, frequency in profile.items():
+            print(f"{word}: {frequency:.2f}")
 if __name__ == "__main__":
     main()
