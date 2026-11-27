@@ -267,6 +267,11 @@ def main():
     plt.legend()
 
     plt.tight_layout()
+    plt.savefig(
+        "results/function_word_comparison.png",
+        dpi=300,
+        bbox_inches="tight"
+    )
     plt.show()
 
 
