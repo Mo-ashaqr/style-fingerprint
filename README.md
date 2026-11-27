@@ -44,6 +44,17 @@ Normalised frequency = (word count / total tokens) × 10,000.
 
 The planned next stage is character n-gram feature extraction, followed by supervised classification and evaluation.
 
+```mermaid
+flowchart TD
+    A[Literary Corpus] --> B[Regex Preprocessing]
+    B --> C[Tokenisation and Lexical Analysis]
+    C --> D[Linguistic Feature Extraction]
+    D --> E[Frequency Normalisation]
+    E --> F[Author Profiling and Visualisation]
+    F -.-> G[Character N-grams]
+    G -.-> H[Machine Learning Classification]
+    H -.-> I[Evaluation and Corpus Expansion]
+```
 ## 4. Preliminary Results
 
 The current analysis reveals differences in the distribution of selected function words between individual novels and in the exploratory author profiles. For example, the following recorded values illustrate variation within Jane Austen's works:
